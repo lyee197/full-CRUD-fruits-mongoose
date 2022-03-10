@@ -9,7 +9,9 @@ const methodOverride = require('method-override')
 const FruitRouter = require('./controllers/fruits')
 const UserRouter = require('./controllers/user')
 // const Fruit = require('./models/fruit')
-
+// session midleware requirements
+const session = require('express-session')
+const MongoStore = require('connect-mongo')
 
 const { redirect } = require('express/lib/response')
 
@@ -28,6 +30,15 @@ app.use(methodOverride('_method'))
 app.use(express.urlencoded({ extended: false }))
 // to serve files from public statically
 app.use(express.static('public'))
+// this is the middleware to set up a session
+app.use(
+    session({
+        secret: process.env.SECRET,
+        store: MongoStore.create({ mongoUrl: process.env.DATABASE_URL}),
+        saveUninitialized: true,
+        resave: false
+    })
+)
 
 ////////////////////////////////////////////
 // Routes
