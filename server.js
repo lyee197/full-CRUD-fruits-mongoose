@@ -7,6 +7,7 @@ const express = require('express')
 const morgan = require('morgan')
 const methodOverride = require('method-override')
 const FruitRouter = require('./controllers/fruits')
+const UserRouter = require('./controllers/user')
 // const Fruit = require('./models/fruit')
 
 
@@ -32,6 +33,7 @@ app.use(express.static('public'))
 // Routes
 ////////////////////////////////////////////
 app.use('/fruits', FruitRouter)
+app.use('/user', UserRouter)
 
 app.get('/', (req, res) => {
     res.send('your server is running, better go catch it')
